@@ -63,7 +63,7 @@ const ChatTable: React.FC<frontChatTypes.ChatTableProps> = ({
   unreadMessages,
   onIndividualSelect,
 }) => {
-  console.log("unreadMessages:", unreadMessages);
+  // console.log("unreadMessages:", unreadMessages);
   const getUnreadCount = (individualId: string) => {
     const unreadInfo = unreadMessages.listOfUnreadMessages.find( (item) => item.candidateId === individualId );
     return unreadInfo ? unreadInfo.ManyUnreadMessages.length : 0;
@@ -82,8 +82,7 @@ const ChatTable: React.FC<frontChatTypes.ChatTableProps> = ({
       <StyledTableBody>
         {individuals.map((individual: frontChatTypes.PersonNode) => {
           let unreadCount = getUnreadCount(individual.candidates.edges[0].node.id);
-          // unreadCount = 2
-          console.log("unreadCount:", unreadCount, "for ", individual.name.firstName);
+          // console.log("unreadCount:", unreadCount, "for ", individual.name.firstName);
           return (
             <StyledTableRow key={individual.id} $selected={selectedIndividual === individual.id} onClick={() => onIndividualSelect(individual.id)} >
               <StyledTableCell>
@@ -100,5 +99,4 @@ const ChatTable: React.FC<frontChatTypes.ChatTableProps> = ({
     </StyledTable>
   );
 };
-
 export default ChatTable;

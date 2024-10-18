@@ -22,6 +22,8 @@ export const MainNavigationDrawerItems = () => {
   const isTasksPage = useIsTasksPage();
   const currentUserDueTaskCount = useRecoilValue(currentUserDueTaskCountState);
   const currentUnreadMessages = useRecoilValue(currentUnreadMessagesState);
+  console.log("Current unread messages:", currentUnreadMessages);
+  console.log("Current unread messages in state:", currentUnreadMessages);
   const location = useLocation();
   const setNavigationMemorizedUrl = useSetRecoilState(
     navigationMemorizedUrlState
