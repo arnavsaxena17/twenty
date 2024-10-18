@@ -120,7 +120,8 @@ export default function ChatMain({ initialCandidateId }: ChatMainProps) {
       setJobs(jobsResponse.data.jobs);
       console.log(peopleResponse?.data.filter((person: frontChatTypes.PersonNode) => person?.candidates?.edges?.length > 0));
       const unreadMessagesList = getUnreadMessageListManyCandidates(availablePeople);
-      console.log(unreadMessagesList);
+      console.log("Unread messages:", unreadMessagesList);
+      console.log("Setting setCurrentUnreadMessages state Unread messages:", unreadMessagesList?.listOfUnreadMessages?.length);
       setCurrentUnreadMessages(unreadMessagesList?.listOfUnreadMessages?.length);
       console.log('count::::', currentUnreadMessages);
       setUnreadMessages(unreadMessagesList);

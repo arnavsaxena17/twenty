@@ -52,13 +52,10 @@ const UnreadIndicator = styled.span`
   justify-content: center;
 `;
 
-
 const NameCell = styled.div`
   display: flex;
   align-items: center;
 `;
-
-
 
 const ChatTable: React.FC<frontChatTypes.ChatTableProps> = ({
   individuals,
@@ -68,13 +65,9 @@ const ChatTable: React.FC<frontChatTypes.ChatTableProps> = ({
 }) => {
   console.log("unreadMessages:", unreadMessages);
   const getUnreadCount = (individualId: string) => {
-    const unreadInfo = unreadMessages.listOfUnreadMessages.find(
-      (item) => item.candidateId === individualId
-    );
+    const unreadInfo = unreadMessages.listOfUnreadMessages.find( (item) => item.candidateId === individualId );
     return unreadInfo ? unreadInfo.ManyUnreadMessages.length : 0;
   };
-  
-  
   return (
     <StyledTable>
       <StyledTableHeader>
@@ -88,7 +81,7 @@ const ChatTable: React.FC<frontChatTypes.ChatTableProps> = ({
       </StyledTableHeader>
       <StyledTableBody>
         {individuals.map((individual: frontChatTypes.PersonNode) => {
-          let unreadCount = getUnreadCount(individual.id);
+          let unreadCount = getUnreadCount(individual.candidates.edges[0].node.id);
           // unreadCount = 2
           console.log("unreadCount:", unreadCount, "for ", individual.name.firstName);
           return (
