@@ -88,7 +88,9 @@ const ChatTable: React.FC<frontChatTypes.ChatTableProps> = ({
       </StyledTableHeader>
       <StyledTableBody>
         {individuals.map((individual: frontChatTypes.PersonNode) => {
-          const unreadCount = getUnreadCount(individual.id);
+          let unreadCount = getUnreadCount(individual.id);
+          // unreadCount = 2
+          console.log("unreadCount:", unreadCount, "for ", individual.name.firstName);
           return (
             <StyledTableRow key={individual.id} $selected={selectedIndividual === individual.id} onClick={() => onIndividualSelect(individual.id)} >
               <StyledTableCell>
