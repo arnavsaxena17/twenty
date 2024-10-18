@@ -66,7 +66,7 @@ const ChatTable: React.FC<frontChatTypes.ChatTableProps> = ({
   unreadMessages,
   onIndividualSelect,
 }) => {
-
+  console.log("unreadMessages:", unreadMessages);
   const getUnreadCount = (individualId: string) => {
     const unreadInfo = unreadMessages.listOfUnreadMessages.find(
       (item) => item.candidateId === individualId
