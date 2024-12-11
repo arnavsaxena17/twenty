@@ -8,7 +8,8 @@ import { executeQuery } from './utils/graphqlClient.js';
 import { objectCreationArr } from './data/objectsData';
 import { getFieldsData } from './data/fieldsData';
 import { getRelationsData } from './data/relationsData';
-
+import { createAIInterviews, getJobIds } from './services/aiInterviewService';
+import { createAIModels, getAIModelIds } from './services/aiModelService';
 
 export class CreateMetaDataStructure{
     constructor(
@@ -86,6 +87,17 @@ export class CreateMetaDataStructure{
             console.log('Relations created successfully');
 
             
+            const aiModelIds = await createAIModels(apiToken);
+            console.log('AI Models created successfully');
+    
+            // Get Job IDs
+            const jobIds = await getJobIds(apiToken);
+            
+            // Create AI Interviews
+            await createAIInterviews(aiModelIds, jobIds, apiToken);
+            console.log('AI Interviews created successfully');
+
+
             console.log('Metadata structure creation completed');
         } catch (error) {
             console.log('Error creating metadata structure:', error);
