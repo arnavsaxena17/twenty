@@ -53,14 +53,38 @@ export class CreateMetaDataStructure{
         }`, { objectFilter: { isActive: { is: true } } }, apiToken);
         return objectsResponse;
     }
+    fetchAllObjects = async (apiToken: string) => {
+        const objectsResponse = await executeQuery<QueryResponse<ObjectMetadata>>(`
+        query ObjectMetadataItems($objectFilter: objectFilter, $fieldFilter: fieldFilter) {
+          objects(paging: {first: 1000}, filter: $objectFilter) {
+            edges {
+              node {
+                id
+                nameSingular
+                namePlural
+                labelSingular
+                labelPlural
+                fields(paging: {first: 1000}, filter: $fieldFilter) {
+                  edges {
+                    node {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }`, {}, apiToken);
+        return objectsResponse;
+    }
 
     async fetchObjectsNameIdMap(apiToken: string): Promise<Record<string, string>> {
-        const objectsResponse = await this.fetchAllCurrentObjects(apiToken);
+        const objectsResponse = await this.fetchAllObjects(apiToken);
         console.log("objectsResponse:", objectsResponse);
         const objectsNameIdMap: Record<string, string> = {};
         objectsResponse?.data?.objects?.edges?.forEach(edge => {
             if (edge?.node?.nameSingular && edge?.node?.id) {
-                objectsNameIdMap[edge.node.nameSingular] = edge.node.id;
+                objectsNameIdMap[edge?.node?.nameSingular] = edge?.node?.id;
             }
         });
         console.log("objectsNameIdMap", objectsNameIdMap);
