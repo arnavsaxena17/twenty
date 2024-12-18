@@ -68,6 +68,7 @@ export class CreateMetaDataStructure{
                   edges {
                     node {
                       name
+                      id
                     }
                   }
                 }
