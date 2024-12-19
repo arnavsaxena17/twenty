@@ -10,6 +10,7 @@ import { getFieldsData } from './data/fieldsData';
 import { getRelationsData } from './data/relationsData';
 import { createAIInterviews, getJobIds } from './services/aiInterviewService';
 import { createAIModels, getAIModelIds } from './services/aiModelService';
+import { createArxEnrichments } from './services/arxEnrichmentsService';
 
 export class CreateMetaDataStructure{
     constructor(
@@ -120,6 +121,9 @@ export class CreateMetaDataStructure{
             
             // Create AI Interviews
             await createAIInterviews(aiModelIds, jobIds, apiToken);
+            console.log('AI Interviews created successfully');
+            
+            await createArxEnrichments(apiToken);
             console.log('AI Interviews created successfully');
 
 
