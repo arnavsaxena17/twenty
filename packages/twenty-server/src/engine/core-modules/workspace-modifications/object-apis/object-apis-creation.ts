@@ -11,7 +11,8 @@ import { getRelationsData } from './data/relationsData';
 import { createAIInterviews, getJobIds } from './services/aiInterviewService';
 import { createAIModels, getAIModelIds } from './services/aiModelService';
 import { createArxEnrichments } from './services/arxEnrichmentsService';
-
+import { JobCreationService } from './services/jobCreationService';
+import {candidatesData} from './data/candidatesData';
 export class CreateMetaDataStructure{
     constructor(
         private readonly workspaceQueryService: WorkspaceQueryService
@@ -126,6 +127,13 @@ export class CreateMetaDataStructure{
             await createArxEnrichments(apiToken);
             console.log('AI Interviews created successfully');
 
+            const jobCreationService = new JobCreationService(apiToken);
+
+            const result = await jobCreationService.executeJobCreationFlow(
+              'Sample Job',
+              candidatesData // Your candidates data
+            );
+        
 
             console.log('Metadata structure creation completed');
         } catch (error) {
