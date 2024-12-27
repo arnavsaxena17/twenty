@@ -123,6 +123,10 @@ export class CreateMetaDataStructure {
             edges {
               node {
                 id
+                name {
+                  firstName
+                  lastName
+                }
               }
             }
           }
@@ -132,6 +136,7 @@ export class CreateMetaDataStructure {
     );
 
     const currentWorkspaceMemberId = currentWorkspaceMemberResponse.data.data.workspaceMembers.edges[0].node.id;
+    console.log("currentWorkspaceMemberId", currentWorkspaceMemberResponse.data.data.workspaceMembers.edges[0].node);
     const currentWorkspaceMemberName = currentWorkspaceMemberResponse.data.data.workspaceMembers.edges[0].node.name.firstName + ' ' + currentWorkspaceMemberResponse.data.data.workspaceMembers.edges[0].node.name.lastName;
     const createResponse = await this.axiosRequest(
       JSON.stringify({
@@ -157,10 +162,6 @@ export class CreateMetaDataStructure {
       apiToken,
     );
     console.log('Workpace member created successfully', createResponse.data);
-    console.log('Workspace member assigned as recruiter successfully');
-
-    console.log('Workspace member updated successfully');
-
     return currentWorkspaceMemberId;
   }
 
