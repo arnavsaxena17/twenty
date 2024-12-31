@@ -203,7 +203,6 @@ export class CreateMetaDataStructure {
       // const jobCreationService = new JobCreationService(apiToken);
       // const result = await jobCreationService.executeJobCreationFlow( 'Sample Job', candidatesData );
       // console.log('Job creation flow completed:', result);
-      console.log('Metadata structure creation completed');
     } catch (error) {
       console.log('Error creating metadata structure:', error);
     }
