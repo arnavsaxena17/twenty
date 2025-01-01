@@ -34,7 +34,7 @@ export class CreateMetaDataStructure {
     const objectsResponse = await executeQuery<QueryResponse<ObjectMetadata>>(
       `
         query ObjectMetadataItems($objectFilter: objectFilter, $fieldFilter: fieldFilter) {
-          objects(paging: {first: 1000}, filter: $objectFilter) {
+          objects(paging: {first: 10000}, filter: $objectFilter) {
             edges {
               node {
                 id
@@ -42,7 +42,7 @@ export class CreateMetaDataStructure {
                 namePlural
                 labelSingular
                 labelPlural
-                fields(paging: {first: 1000}, filter: $fieldFilter) {
+                fields(paging: {first: 10000}, filter: $fieldFilter) {
                   edges {
                     node {
                       name
