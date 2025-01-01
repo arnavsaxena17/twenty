@@ -63,6 +63,8 @@ export class CreateMetaDataStructure {
   async fetchObjectsNameIdMap(apiToken: string): Promise<Record<string, string>> {
     const objectsResponse = await this.fetchAllObjects(apiToken);
     console.log('objectsResponse:', objectsResponse);
+    console.log("objectsResponse.data.data.objects.edges", objectsResponse?.data?.objects?.edges);
+    console.log("objectsResponse.data.data.objects.edges length", objectsResponse?.data?.objects?.edges?.length);
     const objectsNameIdMap: Record<string, string> = {};
     objectsResponse?.data?.objects?.edges?.forEach(edge => {
       if (edge?.node?.nameSingular && edge?.node?.id) {
