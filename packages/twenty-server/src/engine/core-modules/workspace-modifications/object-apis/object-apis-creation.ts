@@ -30,35 +30,6 @@ export class CreateMetaDataStructure {
     return response;
   }
 
-  fetchAllCurrentObjects = async (apiToken: string) => {
-    const objectsResponse = await executeQuery<QueryResponse<ObjectMetadata>>(
-      `
-        query ObjectMetadataItems($objectFilter: objectFilter, $fieldFilter: fieldFilter) {
-          objects(paging: {first: 1000}, filter: $objectFilter) {
-            edges {
-              node {
-                id
-                nameSingular
-                namePlural
-                labelSingular
-                labelPlural
-                fields(paging: {first: 1000}, filter: $fieldFilter) {
-                  edges {
-                    node {
-                      name
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }`,
-      { objectFilter: { isActive: { is: true } } },
-      apiToken,
-    );
-    return objectsResponse;
-  };
-
   fetchAllObjects = async (apiToken: string) => {
     const objectsResponse = await executeQuery<QueryResponse<ObjectMetadata>>(
       `
