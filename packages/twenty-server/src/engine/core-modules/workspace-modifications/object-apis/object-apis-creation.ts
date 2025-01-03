@@ -30,6 +30,51 @@ export class CreateMetaDataStructure {
     return response;
   }
 
+  async fetchFieldsPage(objectId: string, cursor: string | null, apiToken: string) {
+    try {
+      const response = await executeQuery<any>(
+        `
+        query ObjectMetadataItems($after: ConnectionCursor, $objectFilter: objectFilter) {
+          objects(paging: {first: 100, after: $after}, filter: $objectFilter) {
+            edges {
+              node {
+                id
+                nameSingular
+                namePlural
+                fields(paging: {first: 1000}) {
+                  edges {
+                    node {
+                      name
+                      id
+                    }
+                  }
+                }
+              }
+            }
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
+          }
+        }
+        `,
+        {
+          after: cursor || undefined,
+          objectFilter: {
+            id: { eq: objectId }
+          }
+        },  
+        apiToken
+      );
+      
+      console.log('fetchFieldsPage response:', response.data);
+      return response;
+  
+    } catch (error) {
+      console.error('Error fetching fields page:', error);
+      throw error;
+    }
+  }    
   fetchAllObjects = async (apiToken: string) => {
     const objectsResponse = await executeQuery<QueryResponse<ObjectMetadata>>(
       `
@@ -63,11 +108,11 @@ export class CreateMetaDataStructure {
   async fetchObjectsNameIdMap(apiToken: string): Promise<Record<string, string>> {
     const objectsResponse = await this.fetchAllObjects(apiToken);
     console.log('objectsResponse:', objectsResponse);
-    console.log("objectsResponse.data.data.objects.edges", objectsResponse?.data?.objects?.edges);
     console.log("objectsResponse.data.data.objects.edges length", objectsResponse?.data?.objects?.edges?.length);
     const objectsNameIdMap: Record<string, string> = {};
     objectsResponse?.data?.objects?.edges?.forEach(edge => {
       if (edge?.node?.nameSingular && edge?.node?.id) {
+
         objectsNameIdMap[edge?.node?.nameSingular] = edge?.node?.id;
       }
     });
