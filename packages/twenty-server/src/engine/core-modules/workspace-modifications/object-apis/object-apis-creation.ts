@@ -161,21 +161,19 @@ export class CreateMetaDataStructure {
 
       // Get Job IDs
       const jobIds = await getJobIds(apiToken);
-
       // Create AI Interviews
       await createAIInterviews(aiModelIds, jobIds, apiToken);
       console.log('AI Interviews created successfully');
-
       await createArxEnrichments(apiToken);
       console.log('AI Interviews created successfully');
-      // const apiKeyService = new ApiKeyService();
+      const apiKeyService = new ApiKeyService();
       const workspaceMemberId = await this.createAndUpdateWorkspaceMember(apiToken);
       console.log('Metadata structure creation completed');
-      // const apiKey = await apiKeyService.createApiKey(apiToken);
-      // console.log('API key created successfully:', apiKey);
-      // const jobCreationService = new JobCreationService(apiToken);
-      // const result = await jobCreationService.executeJobCreationFlow( 'Sample Job', candidatesData );
-      // console.log('Job creation flow completed:', result);
+      const apiKey = await apiKeyService.createApiKey(apiToken);
+      console.log('API key created successfully:', apiKey);
+      const jobCreationService = new JobCreationService(apiToken);
+      const result = await jobCreationService.executeJobCreationFlow( 'Sample Job', candidatesData );
+      console.log('Job creation flow completed:', result);
     } catch (error) {
       console.log('Error creating metadata structure:', error);
     }
