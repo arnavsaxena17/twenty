@@ -194,6 +194,8 @@ export class CreateMetaDataStructure {
 
       const fieldsData = getFieldsData(objectsNameIdMap);
 
+      console.log("Number of fieldsData", fieldsData.length);
+
       await createFields(fieldsData, apiToken);
       console.log('Fields created successfully');
       const relationsFields = getRelationsData(objectsNameIdMap);
@@ -216,9 +218,9 @@ export class CreateMetaDataStructure {
       console.log('Metadata structure creation completed');
       const apiKey = await apiKeyService.createApiKey(apiToken);
       console.log('API key created successfully:', apiKey);
-      const jobCreationService = new JobCreationService(apiToken);
-      const result = await jobCreationService.executeJobCreationFlow( 'Sample Job', candidatesData );
-      console.log('Job creation flow completed:', result);
+      // const jobCreationService = new JobCreationService(apiToken);
+      // const result = await jobCreationService.executeJobCreationFlow( 'Sample Job', candidatesData );
+      // console.log('Job creation flow completed:', result);
     } catch (error) {
       console.log('Error creating metadata structure:', error);
     }
