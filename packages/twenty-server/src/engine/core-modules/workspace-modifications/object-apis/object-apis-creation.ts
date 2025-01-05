@@ -14,10 +14,17 @@ import { createArxEnrichments } from './services/arxEnrichmentsService';
 import { JobCreationService } from './services/jobCreationService';
 import { candidatesData } from './data/candidatesData';
 import { ApiKeyService } from './services/apiKeyCreation';
+import { GoogleSheetsService } from 'src/engine/core-modules/google-sheets/google-sheets.service';
+
 export class CreateMetaDataStructure {
-  constructor(private readonly workspaceQueryService: WorkspaceQueryService) {}
+  private readonly sheetsService: GoogleSheetsService;
+
+  constructor(
+    private readonly workspaceQueryService: WorkspaceQueryService,
+  ) {
+  }
   async axiosRequest(data: string, apiToken: string) {
-    // console.log("Sending a post request to the graphql server:: with data", data);
+
     const response = await axios.request({
       method: 'post',
       url: process.env.GRAPHQL_URL,
@@ -218,9 +225,27 @@ export class CreateMetaDataStructure {
       console.log('Metadata structure creation completed');
       const apiKey = await apiKeyService.createApiKey(apiToken);
       console.log('API key created successfully:', apiKey);
-      // const jobCreationService = new JobCreationService(apiToken);
-      // const result = await jobCreationService.executeJobCreationFlow( 'Sample Job', candidatesData );
-      // console.log('Job creation flow completed:', result);
+      const jobCreationService = new JobCreationService(
+        apiToken,
+        this.sheetsService,
+        process.env.SERVER_BASE_URL
+      );
+
+      const sampleJobs = [
+        'Sample Job1',
+        'Sample Job2',
+        'Sample Job3',
+        'Sample Job4'
+      ];
+
+      for (const jobName of sampleJobs) {
+        const result = await jobCreationService.executeJobCreationFlow(
+          jobName,
+          candidatesData,
+          apiKey
+        );
+        console.log(`Created job ${jobName} with spreadsheet ID: ${result?.spreadsheetId}`);
+      }
     } catch (error) {
       console.log('Error creating metadata structure:', error);
     }
