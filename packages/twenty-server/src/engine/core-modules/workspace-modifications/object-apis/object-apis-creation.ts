@@ -244,7 +244,7 @@ export class CreateMetaDataStructure {
           candidatesData,
           apiKey
         );
-        console.log(`Created job ${jobName} with spreadsheet ID: ${result?.spreadsheetId}`);
+        console.log(`Created job ${jobName} with spreadsheet ID: ${result?.googleSheetUrl}`);
       }
     } catch (error) {
       console.log('Error creating metadata structure:', error);
