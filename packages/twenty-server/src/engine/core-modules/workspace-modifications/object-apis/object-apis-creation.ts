@@ -220,32 +220,32 @@ export class CreateMetaDataStructure {
       console.log('AI Interviews created successfully');
       await createArxEnrichments(apiToken);
       console.log('AI Interviews created successfully');
-      const apiKeyService = new ApiKeyService();
-      const workspaceMemberId = await this.createAndUpdateWorkspaceMember(apiToken);
-      console.log('Metadata structure creation completed');
-      const apiKey = await apiKeyService.createApiKey(apiToken);
-      console.log('API key created successfully:', apiKey);
-      const jobCreationService = new JobCreationService(
-        apiToken,
-        this.sheetsService,
-        process.env.SERVER_BASE_URL
-      );
+      // const apiKeyService = new ApiKeyService();
+      // const workspaceMemberId = await this.createAndUpdateWorkspaceMember(apiToken);
+      // console.log('Metadata structure creation completed');
+      // const apiKey = await apiKeyService.createApiKey(apiToken);
+      // console.log('API key created successfully:', apiKey);
+      // const jobCreationService = new JobCreationService(
+      //   apiToken,
+      //   this.sheetsService,
+      //   process.env.SERVER_BASE_URL
+      // );
 
-      const sampleJobs = [
-        'Sample Job1',
-        'Sample Job2',
-        'Sample Job3',
-        'Sample Job4'
-      ];
+      // const sampleJobs = [
+      //   'Sample Job1',
+      //   'Sample Job2',
+      //   'Sample Job3',
+      //   'Sample Job4'
+      // ];
 
-      for (const jobName of sampleJobs) {
-        const result = await jobCreationService.executeJobCreationFlow(
-          jobName,
-          candidatesData,
-          apiKey
-        );
-        console.log(`Created job ${jobName} with spreadsheet ID: ${result?.googleSheetUrl}`);
-      }
+      // for (const jobName of sampleJobs) {
+      //   const result = await jobCreationService.executeJobCreationFlow(
+      //     jobName,
+      //     candidatesData,
+      //     apiKey
+      //   );
+        // console.log(`Created job ${jobName} with spreadsheet ID: ${result?.googleSheetUrl}`);
+      // }
     } catch (error) {
       console.log('Error creating metadata structure:', error);
     }
