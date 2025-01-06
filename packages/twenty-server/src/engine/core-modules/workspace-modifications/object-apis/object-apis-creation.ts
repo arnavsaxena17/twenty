@@ -220,32 +220,42 @@ export class CreateMetaDataStructure {
       console.log('AI Interviews created successfully');
       await createArxEnrichments(apiToken);
       console.log('AI Interviews created successfully');
-      // const apiKeyService = new ApiKeyService();
-      // const workspaceMemberId = await this.createAndUpdateWorkspaceMember(apiToken);
+      const apiKeyService = new ApiKeyService();
+      const workspaceMemberId = await this.createAndUpdateWorkspaceMember(apiToken);
       // console.log('Metadata structure creation completed');
-      // const apiKey = await apiKeyService.createApiKey(apiToken);
+      const apiKey = await apiKeyService.createApiKey(apiToken);
       // console.log('API key created successfully:', apiKey);
-      // const jobCreationService = new JobCreationService(
-      //   apiToken,
-      //   this.sheetsService,
-      //   process.env.SERVER_BASE_URL
-      // );
+      const jobCreationService = new JobCreationService(
+        apiToken,
+        this.sheetsService,
+        process.env.SERVER_BASE_URL
+      );
 
-      // const sampleJobs = [
-      //   'Sample Job1',
-      //   'Sample Job2',
-      //   'Sample Job3',
-      //   'Sample Job4'
-      // ];
+      const sampleJobs = [
+        'Sample Job1',
+        'Sample Job2',
+        'Sample Job3',
+        'Sample Job4'
+      ];
+      const arxenaJobIds = [
+        '64b29dbdf9822851831e4de9',
+        '64b29dbdf9822851831e4dea',
+        '64b29dbdf9822851831e4deb',
+        '64b29dbdf9822851831e4dec'
+      ];
 
-      // for (const jobName of sampleJobs) {
-      //   const result = await jobCreationService.executeJobCreationFlow(
-      //     jobName,
-      //     candidatesData,
-      //     apiKey
-      //   );
-        // console.log(`Created job ${jobName} with spreadsheet ID: ${result?.googleSheetUrl}`);
-      // }
+      for (let i = 0; i < sampleJobs.length; i++) {
+        const jobName = sampleJobs[i];
+        const arxenaJobId = arxenaJobIds[i];
+        await new Promise(resolve => setTimeout(resolve, 5000));
+        const result = await jobCreationService.executeJobCreationFlow(
+          jobName,
+          candidatesData,
+          apiKey,
+          arxenaJobId
+        );
+        console.log(`Created job ${jobName} with spreadsheet ID: ${result?.googleSheetUrl}`);
+      }
     } catch (error) {
       console.log('Error creating metadata structure:', error);
     }
