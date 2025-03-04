@@ -544,13 +544,18 @@ export class ArxChatEndpoint {
         'going to refresh chat counts by candidate Ids',
         candidateIds,
       );
-      await new UpdateChat(
+      const response = await new UpdateChat(
         this.workspaceQueryService,
       ).createChatBasedShortlistDelivery(candidateIds, apiToken);
       console.log(
-        'This is the response in create chatBasedShortlistDelivery shortlist',
+        'This is the response in create chatBasedShortlistDelivery shortlist', response
       );
-      return { status: 'Success' };
+
+      if (response && response.overall_success) {
+        return { status: 'Success' };
+      }
+      return { status: 'Failed' };
+
     } catch (err) {
       console.error('Error in create_gmail_draft_shortlist chats:', err);
       return { status: 'Failed', error: err };
